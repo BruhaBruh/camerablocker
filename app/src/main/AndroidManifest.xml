@@ -4,10 +4,12 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+        android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -31,15 +33,12 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".OverlayActivity"
-            android:theme="@style/Theme.CameraBlocker"
-        >
-        </activity>
+        <service android:name=".CameraMonitorService" android:foregroundServiceType="camera" />
 
-        <service android:name=".CameraMonitorService" />
-
-        <receiver android:name=".BootReceiver" android:enabled="true" android:exported="true">
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
